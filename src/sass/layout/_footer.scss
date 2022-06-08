@@ -1,7 +1,5 @@
-.footer-part {
+footer {
     background-color: $color-light ;
-   
-    
 }
 .footer-text {
     max-width: 240px;
@@ -18,8 +16,7 @@
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
-
-   
+    
     @media screen and (min-width: $bp-tablet) {
         padding-top: 30px;
         padding-bottom: 30px;
