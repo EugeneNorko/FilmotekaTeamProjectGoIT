@@ -19,9 +19,15 @@
     padding-bottom: 10px;
     color:inherit;
 
-    &:hover, &:focus {
+    &:hover {
         .logo__icon {
             stroke:$color-accent;
+        }
+    }
+
+    &.js-library {
+        @media screen and (min-width:$bp-desktop) {
+            margin-left:40px;
         }
     }
 }
@@ -46,6 +52,12 @@
     align-items: center;
     margin-right: 0;
     margin-left: auto;
+
+    &.js-library {
+            @media screen and (min-width:$bp-desktop) {
+                margin-right: 40px;
+            }
+        }
 }
 
 .header-nav__item {

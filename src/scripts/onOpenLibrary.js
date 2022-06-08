@@ -1,10 +1,12 @@
-import { refs } from './refs.js'
+import { refs } from './refs.js';
 
 refs.headerNav.addEventListener('click', onChangePage);
+refs.logo.addEventListener('click', onChangePage);
 
 function onChangePage(e) {
     e.preventDefault();
     const currentElementClick = e.target;
+    console.log(currentElementClick)
     if (currentElementClick.nodeName !== "A") {
         return;
     }
@@ -19,21 +21,23 @@ function onChangePage(e) {
 
 function onOpenHomePage(currentElementClick) {
     if (!currentElementClick.classList.contains('header-nav__link--active')) {
-        console.log('home');
         deleteActiveLink()
-        setActiveLink(currentElementClick)
+        setActiveLink(refs.homePage)
         refs.heroSection.classList.remove('js-library');
         refs.libraryButtons.classList.add('visually-hidden');
         refs.searchInput.classList.remove('visually-hidden');
+        refs.logo.classList.remove('js-library');
+        refs.headerNav.classList.remove('js-library');
     }
 }
 
 function onOpenLibraryPage(currentElementClick) {
     if (!currentElementClick.classList.contains('header-nav__link--active')) {
-        console.log('lib');
         onHideSearchInput();
         refs.heroSection.classList.add('js-library');
         refs.libraryButtons.classList.remove('visually-hidden');
+        refs.logo.classList.add('js-library');
+        refs.headerNav.classList.add('js-library');
         deleteActiveLink()
         setActiveLink(currentElementClick);
     }

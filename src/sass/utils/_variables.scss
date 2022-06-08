@@ -15,3 +15,7 @@ $bp-desktop: 1024px;
 
 $duration: 250ms;
 $timing: linear;
+
+$backgroundHeroLinear: linear-gradient(to left,
+    rgba(0, 0, 0, 0.56) 0%,
+    rgba(0, 0, 0, 0.56) 100%);

@@ -1,39 +1,48 @@
-import { popularFilm } from '././fetch.js'
+import { popularFilm } from './fetch.js'
+import { refs } from './refs.js';
+import { GENRES } from './genre.js';
 
-const place = document.querySelector('.main');
+getPopularMovieList();
 
-popularFilm().then((filmSet) => {
+function getPopularMovieList() {
+  return popularFilm().then((filmSet) => {
     console.log(filmSet)
     const filmArray = filmSet.results;
-    renderFilmCardHtml(filmArray);
-});
+    renderMovieCardOnMainPage(filmArray);
+  })
+};
 
-export function renderFilmCardHtml(filmArray) {
-    const renderHtml = filmArray.reduce((html, film) => {
+export function renderMovieCardOnMainPage(filmArray) {
+  const markup = filmArray.reduce((html, film) => {
+    const { original_title, poster_path, genre_ids, id, release_date } = film;
+    const genresArray = getGenresToId(genre_ids);
+    const genresText = sliceGenres(genresArray);
         return html +=
         `<li class="gallery__item">
-          <div class="movie-card">
-            <img
-              class="poster"
-              src="https://image.tmdb.org/t/p/original/${film.poster_path}"
-              alt="poster of movie"
-              data-id="${film.id}"
-              loading="lazy"
-            />
-
-            <div class="movie-details">
-              <div class="movie-details-info">
-                <p class="movie-name">${film.title}</p>
-                <div class="movie-description">
-                  <p class="movie-info">Documentary, Drama, Other | 2019</p>
-                  <div class="movie-details-rate">6.5</div>
-                </div>
-              </div>
+          <a class="gallery__link">
+            <img class='gallery__poster' src='https://image.tmdb.org/t/p/w500/${poster_path}' loading="lazy" alt='Poster for film ${original_title}' data-id=${id} />
+            <div class="gallery__movie-details">
+              <p class="movie-details__movie-name">${original_title}</p>
+              <p class="movie-details__movie-info">${genresText} | ${release_date}</p>
             </div>
-          </div>
+          </a>
         </li>`
     }, "");
-    return place.insertAdjacentHTML('beforeend', renderHtml); 
+    return refs.movieGallery.insertAdjacentHTML('beforeend', markup);
 }
 
 //src="https://upload.wikimedia.org/wikipedia/commons/c/c2/No_image_poster.png"
+
+
+export function getGenresToId(idArray) {
+  return idArray.map(genreId => GENRES[genreId]);
+}
+
+function sliceGenres(genreArray) {
+  if (genreArray.length > 2) {
+    const slicedGenredWordArray = genreArray.slice(0, 2);
+    slicedGenredWordArray.push('Other');
+    return slicedGenredWordArray.join(", ");
+  }
+  return genreArray.join(", ")
+}
