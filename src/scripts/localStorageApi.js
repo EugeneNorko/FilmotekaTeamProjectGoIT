@@ -28,4 +28,16 @@ const remove = key => {
   }
 };
 
-export { load, save, remove };
+const add =(status,id) =>{
+  const newFilm = {
+    status,
+    id,
+  }
+  const convertId = JSON.stringify(newFilm);
+  localStorage.setItem(convertId);
+} 
+
+
+ 
+  
+export { load, save, remove,add };
