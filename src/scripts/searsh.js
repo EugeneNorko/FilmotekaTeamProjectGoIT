@@ -8,7 +8,7 @@ import { popularFilm } from './fetch.js';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { save } from '../scripts/localStorageApi.js';
-
+import forEmpryPage from './forEmpryPage.js';
 
 
 const debounce = require('lodash.debounce');
@@ -22,7 +22,7 @@ let checkStartSpiner = null;
 function onTexterialInput(e) {
     onHideSearchInfo()
     resetGallery();
-
+    
     checkStartSpiner = true;
     setTimeout(() => {showSpiner ()}, 300);
 
@@ -40,8 +40,9 @@ function onTexterialInput(e) {
         save("numberOfPage", 1);
         }).catch(err => console.log(err));
     };
+   
+    createListFilms(curentCountri);
     
-    createListFilms (curentCountri);
 }
 
 export function createListFilms (inputValue, page) {
@@ -52,7 +53,6 @@ export function createListFilms (inputValue, page) {
         checkStartSpiner = false;
 
         Loading.remove();
-
         if(inputValue.results.length<1){
             Notify.failure(`Can't find a movie with this name`);
             onShowSearchInfo();
